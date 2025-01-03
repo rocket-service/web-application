@@ -3,6 +3,8 @@ package router
 import (
 	"fmt"
 	"rocket-web/internal/config"
+	"rocket-web/internal/router/users"
+	"rocket-web/internal/storage/postgres"
 
 	"go.uber.org/zap"
 
@@ -11,11 +13,19 @@ import (
 )
 
 type Router struct {
-	app *fiber.App
-	log *zap.SugaredLogger
+	app     *fiber.App
+	log     *zap.SugaredLogger
+	storage *postgres.Storage
+
+	// Services
+	users *users.Service
 }
 
-func New(cfg *config.Config, log *zap.SugaredLogger) *Router {
+func New(
+	cfg *config.Config,
+	storage *postgres.Storage,
+	log *zap.SugaredLogger,
+) *Router {
 	viewEngine := html.New("./web/templates", ".html")
 	switch cfg.Env {
 	case config.EnvLocal:
@@ -29,17 +39,25 @@ func New(cfg *config.Config, log *zap.SugaredLogger) *Router {
 		DisableStartupMessage: true,
 	})
 
-	app.Static("/static", "./web/assets")
+	app.Static("/static", "./web/static")
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("hello, world")
-	})
-	return &Router{app: app, log: log}
+	users := users.New(storage, log)
+
+	return &Router{
+		app:     app,
+		log:     log,
+		storage: storage,
+		users:   users,
+	}
 }
 
 func (r *Router) MustRun(port int32) error {
 	// TODO: Setup routes
 	r.log.Infow("starting server", zap.Int32("port", port))
+
+	r.log.Info("setup account routes")
+	r.setupAccountRoutes()
+
 	return r.run(port)
 }
 
@@ -49,4 +67,11 @@ func (r *Router) run(port int32) error {
 
 func (r *Router) Close() error {
 	return r.app.Shutdown()
+}
+
+func (r *Router) setupAccountRoutes() {
+	r.app.Get("/register", r.users.RenderRegisterPage)
+	r.app.Post("/register", r.users.RegisterUser)
+	r.app.Get("/login", r.users.RenderLoginPage)
+	r.app.Post("/login", r.users.LoginUser)
 }

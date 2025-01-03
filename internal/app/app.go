@@ -25,7 +25,7 @@ func New(cfg *config.Config, log *zap.SugaredLogger) *App {
 		log.Fatal(err)
 	}
 
-	router := router.New(cfg, log)
+	router := router.New(cfg, postgres, log)
 	return &App{router: router, log: log}
 }
 
