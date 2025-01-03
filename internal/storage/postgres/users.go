@@ -15,15 +15,14 @@ func (s *Storage) SaveUser(ctx context.Context, username, password string) (int6
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 
-	stmt := "SELECT id FROM Users WHERE username = $1"
-	var id int64
-	err := pgxscan.Get(ctx, s.conn, &id, stmt, username)
+	_, err := s.GetUser(ctx, username)
 	if err == nil {
 		return 0, storage.ErrUserAlreadyExists
 	}
 
-	stmt = "INSERT INTO Users (username, passwordhash) VALUES ($1, $2) RETURNING id"
+	stmt := "INSERT INTO Users (username, passwordhash) VALUES ($1, $2) RETURNING id"
 
+	var id int64
 	err = s.conn.QueryRow(ctx, stmt, username, password).Scan(&id)
 	if err != nil {
 		return 0, err
