@@ -1,0 +1,30 @@
+version: "3"
+
+tasks:
+  default:
+    cmds: 
+      - task: run
+  build:
+    aliases: 
+      - b
+    desc: "Build project"
+    cmds:
+      - go build ./cmd/server
+  run:
+    aliases: 
+      - r
+    desc: "Run local server"
+    cmds:
+      - go run ./cmd/server --config "./config/local.yaml"
+  migrations-up:
+    aliases: 
+      - mu
+    desc: "Run migrations up"
+    cmds:
+      - go run ./cmd/migrations --up
+  migrations-down:
+    aliases: 
+      - md
+    desc: "Run migrations down"
+    cmds:
+      - go run ./cmd/migrations --down

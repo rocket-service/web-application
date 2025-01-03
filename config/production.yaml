@@ -1,0 +1,9 @@
+env: "production"
+tokenKey: "secret_key"
+port: 8080
+postgres:
+  host: "localhost"
+  port: "5432"
+  user: "postgres"
+  password: "test-password"
+  database: "rocket_db"
