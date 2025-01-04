@@ -3,6 +3,7 @@ CREATE TABLE Users (
     ID SERIAL PRIMARY KEY,
     Username VARCHAR(50) NOT NULL,
     PasswordHash VARCHAR(255) NOT NULL,
+    HardwareID VARCHAR(255),
     IsAdmin BOOLEAN DEFAULT FALSE,
     IsBanned BOOLEAN DEFAULT FALSE,
     BannedReason VARCHAR(255),

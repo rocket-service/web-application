@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container-fluid {
+            display: flex;
+            max-width: 1200px;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .sidebar {
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 16px;
+            width: 250px;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #ffffff;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .sidebar a:hover {
+            color: #007bff;
+        }
+
+        .sidebar .menu-icon {
+            margin-right: 8px;
+        }
+
+        .content {
+            padding: 15px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            font-size: 16px;
+            flex-grow: 1;
+            margin-left: 15px;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row w-100">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                <div class="sidebar">
+                    <div class="text-center mb-3">
+                        <img src="https://via.placeholder.com/80" class="rounded-circle" alt="Profile">
+                        <h6 class="mt-2">{{Username}}</h6>
+                        <p class="small">ID: {{ID}}</p>
+                    </div>
+                    <a href="#"><i class="fas fa-download menu-icon"></i>Download client</a>
+                    <a href="#"><i class="fas fa-key menu-icon"></i>Subscriptions</a>
+                    <a href="#"><i class="fas fa-lock menu-icon"></i>Keys</a>
+                    <a href="#"><i class="fas fa-cog menu-icon"></i>Settings</a>
+                    <hr>
+                    <a href="#"><i class="fas fa-link menu-icon"></i>Github</a>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <div class="content">
+                    <h6>Promo activation</h6>
+                    <p class="small">Activate a promo code for discounts or subscriptions.</p>
+                    <div class="mb-2">
+                        <input type="text" class="form-control form-control-sm" placeholder="Enter your promo code">
+                    </div>
+                    <button class="btn btn-custom mb-3">Activate</button>
+
+                    <h6>Subscriptions</h6>
+                    <p class="small">Choose your subscription</p>
+                    <div class="mb-1 d-flex justify-content-between">
+                        <span>Product Name</span>
+                        <button class="btn btn-danger btn-sm">No permission</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
